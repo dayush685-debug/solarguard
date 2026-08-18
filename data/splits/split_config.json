@@ -1,0 +1,11 @@
+{
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "valid": 0.15,
+    "test": 0.15
+  },
+  "grouping_method": "near-duplicate cluster (dHash<=5) collapsed to 1 representative per cluster, then merged with EXIF same-camera-same-day session groups where present (768 final groups from 772 images)",
+  "stratification": "by class label",
+  "source_population": "772 verified-unique images (see PLANNING.md for derivation from 1,574 raw files)"
+}

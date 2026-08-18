@@ -1,0 +1,15 @@
+{
+  "best_epoch": 54,
+  "best_val_macro_f1": 0.8107845041668571,
+  "best_val_loss": 0.706109701950326,
+  "final_epoch": 69,
+  "final_train_loss": 0.725601832513456,
+  "final_val_loss": 0.6864969110132283,
+  "final_val_accuracy": 0.7777777777777778,
+  "final_val_macro_f1": 0.7595954777514372,
+  "final_val_weighted_f1": 0.7767834206043674,
+  "stopped_early": true,
+  "epochs_ran": 69,
+  "total_time_seconds": 1356.26,
+  "checkpoint_path": "C:\\Users\\ayush dubey\\OneDrive\\Desktop\\Solar_Guard\\experiments\\baseline_cnn\\run_20260818_005718\\checkpoint_best.pt"
+}

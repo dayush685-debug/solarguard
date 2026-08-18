@@ -1,0 +1,23 @@
+[project]
+name = "solarguard"
+version = "0.1.0"
+description = "SolarGuard — explainable solar panel defect classification"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "numpy>=2.0",
+    "scikit-learn",
+    "matplotlib",
+    "pyyaml",
+    "Pillow",
+]
+# torch/torchvision deliberately NOT listed: Colab provides a CUDA-matched build
+# already; pinning our local versions here risks conflicting with Colab's own
+# CUDA runtime for no benefit. Local dev machines already have them installed.
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

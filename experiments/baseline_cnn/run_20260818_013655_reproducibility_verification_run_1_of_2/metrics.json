@@ -1,0 +1,15 @@
+{
+  "best_epoch": 68,
+  "best_val_macro_f1": 0.7843631687621458,
+  "best_val_loss": 0.7030144453558147,
+  "final_epoch": 83,
+  "final_train_loss": 0.7340374946594238,
+  "final_val_loss": 0.7079421857483367,
+  "final_val_accuracy": 0.7948717948717948,
+  "final_val_macro_f1": 0.7625001917030901,
+  "final_val_weighted_f1": 0.7899129373042415,
+  "stopped_early": true,
+  "epochs_ran": 83,
+  "total_time_seconds": 1194.92,
+  "checkpoint_path": "C:\\Users\\ayush dubey\\OneDrive\\Desktop\\Solar_Guard\\experiments\\baseline_cnn\\run_20260818_013655_reproducibility_verification_run_1_of_2\\checkpoint_best.pt"
+}

@@ -1,0 +1,34 @@
+# Datasets — the actual images are never redistributed via GitHub (see DATASET.md).
+# Small, image-free metadata (manifests, hashes, labels) is tracked deliberately —
+# it's what makes the experiment reproducible without redistributing the dataset.
+data/*
+!data/splits/
+!data/processed/
+data/processed/*
+!data/processed/pvpanel_audit_with_clusters.csv
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+.ipynb_checkpoints/
+
+# Environments
+venv/
+.venv/
+env/
+
+# Model artifacts (large binaries — tracked separately once training starts)
+checkpoints/
+*.pt
+*.pth
+*.h5
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
