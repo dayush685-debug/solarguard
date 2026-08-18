@@ -1,0 +1,142 @@
+{
+  "corrupt_count": 0,
+  "suspicious_count": 0,
+  "width": {
+    "min": 149,
+    "max": 6240,
+    "mean": 984.2,
+    "median": 720
+  },
+  "height": {
+    "min": 110,
+    "max": 5376,
+    "mean": 799.8,
+    "median": 632
+  },
+  "distinct_resolutions": 453,
+  "most_common_resolutions": [
+    {
+      "width": 720,
+      "height": 960,
+      "count": 58
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "count": 23
+    },
+    {
+      "width": 2048,
+      "height": 1536,
+      "count": 22
+    },
+    {
+      "width": 1536,
+      "height": 2048,
+      "count": 21
+    },
+    {
+      "width": 960,
+      "height": 720,
+      "count": 16
+    }
+  ],
+  "aspect_ratio": {
+    "min": 1.0,
+    "max": 3.6,
+    "mean": 1.483,
+    "median": 1.357
+  },
+  "mode_distribution": {
+    "RGB": 756,
+    "RGBA": 16
+  },
+  "format_distribution": {
+    "JPEG": 753,
+    "PNG": 17,
+    "MPO": 2
+  },
+  "likely_grayscale_count": 1,
+  "class_distribution": {
+    "Clean": 180,
+    "Dusty": 175,
+    "Snow-Covered": 143,
+    "Bird-drop": 125,
+    "Electrical-damage": 83,
+    "Physical-Damage": 66
+  },
+  "class_distribution_pct": {
+    "Clean": 23.32,
+    "Dusty": 22.67,
+    "Snow-Covered": 18.52,
+    "Bird-drop": 16.19,
+    "Electrical-damage": 10.75,
+    "Physical-Damage": 8.55
+  },
+  "imbalance_ratio_majority_to_minority": 2.73,
+  "label_verification": {
+    "valid_classes": [
+      "Bird-drop",
+      "Clean",
+      "Dusty",
+      "Electrical-damage",
+      "Physical-Damage",
+      "Snow-Covered"
+    ],
+    "invalid_labels_found": [],
+    "passed": true
+  },
+  "duplicate_verification": {
+    "exact_duplicates_remaining": 0,
+    "near_dup_clusters_with_multiple_reps": 0,
+    "passed": true
+  },
+  "post_split_leakage_audit": {
+    "exact_duplicate_groups_crossing_splits": 0,
+    "near_duplicate_clusters_crossing_splits": 0,
+    "passed": true
+  },
+  "split_class_distribution": {
+    "Test": {
+      "Bird-drop": 19,
+      "Clean": 27,
+      "Dusty": 26,
+      "Electrical-damage": 12,
+      "Physical-Damage": 10,
+      "Snow-Covered": 21
+    },
+    "Train": {
+      "Bird-drop": 87,
+      "Clean": 126,
+      "Dusty": 123,
+      "Electrical-damage": 58,
+      "Physical-Damage": 46,
+      "Snow-Covered": 100
+    },
+    "Valid": {
+      "Bird-drop": 19,
+      "Clean": 27,
+      "Dusty": 26,
+      "Electrical-damage": 13,
+      "Physical-Damage": 10,
+      "Snow-Covered": 22
+    }
+  },
+  "split_totals": {
+    "Train": 540,
+    "Valid": 117,
+    "Test": 115
+  },
+  "class_weights_inverse_frequency": {
+    "computed_from": "train split only",
+    "formula": "n_train_samples / (n_classes * n_samples_in_class)",
+    "weights": {
+      "Clean": 0.7143,
+      "Dusty": 0.7317,
+      "Snow-Covered": 0.9,
+      "Bird-drop": 1.0345,
+      "Electrical-damage": 1.5517,
+      "Physical-Damage": 1.9565
+    }
+  }
+}

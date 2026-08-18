@@ -4,8 +4,11 @@
 data/*
 !data/splits/
 !data/processed/
+!data/final/
 data/processed/*
 !data/processed/pvpanel_audit_with_clusters.csv
+data/final/*
+!data/final/dataset_statistics.json
 
 # Python
 __pycache__/
