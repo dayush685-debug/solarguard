@@ -26,7 +26,7 @@ def _conv_block(in_channels: int, out_channels: int) -> nn.Sequential:
 
 class BaselineCNN(nn.Module):
     """Input: (batch, in_channels, 224, 224). Output: (batch, num_classes) raw logits
-    — no softmax applied here; CrossEntropyLoss (Phase 3 file 2) expects raw logits
+    — no softmax applied here; CrossEntropyLoss expects raw logits
     and applies log-softmax internally."""
 
     def __init__(self, num_classes: int = 6, in_channels: int = 3) -> None:

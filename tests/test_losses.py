@@ -8,7 +8,8 @@ import pandas as pd
 import pytest
 import torch
 
-from solarguard.training.losses import build_loss, class_weights_from_train_split, compute_class_weights
+from solarguard.training.losses import (build_focal_loss, build_loss,
+                                        class_weights_from_train_split, compute_class_weights)
 
 ROOT = Path(__file__).resolve().parent.parent
 SPLITS_DIR = ROOT / "data" / "splits"
@@ -95,3 +96,58 @@ def test_weighted_loss_matches_hand_computed_value():
 
     actual = loss_fn(logits, targets).item()
     assert actual == pytest.approx(expected, abs=1e-5)
+
+
+def test_focal_loss_gamma_zero_is_exactly_weighted_cross_entropy():
+    """The scientific foundation of Experiment 2: gamma is a single knob on top of the
+    baseline objective, not a different loss. At gamma=0 the focal loss must reproduce
+    build_loss() in both value AND gradient -- gradient equality is the stronger claim,
+    since that is what actually drives training."""
+    weights = class_weights_from_train_split(SPLITS_DIR)
+    ce = build_loss(weights)
+    focal0 = build_focal_loss(weights, gamma=0.0)
+
+    g = torch.Generator().manual_seed(0)
+    for _ in range(10):
+        logits = torch.randn(32, len(weights), generator=g)
+        targets = torch.randint(0, len(weights), (32,), generator=g)
+        assert ce(logits, targets).item() == pytest.approx(focal0(logits, targets).item(), abs=1e-5)
+
+    logits = torch.randn(32, len(weights), generator=g, requires_grad=True)
+    targets = torch.randint(0, len(weights), (32,), generator=g)
+    ce(logits, targets).backward()
+    grad_ce = logits.grad.clone()
+    logits.grad = None
+    focal0(logits, targets).backward()
+    assert torch.allclose(grad_ce, logits.grad, atol=1e-6)
+
+
+def test_focal_loss_gamma_two_actually_changes_the_objective():
+    """Guards against a no-op experiment: gamma=2 must produce different gradients,
+    and must down-weight easy examples far more than hard ones."""
+    weights = class_weights_from_train_split(SPLITS_DIR)
+    ce = build_loss(weights)
+    focal2 = build_focal_loss(weights, gamma=2.0)
+
+    g = torch.Generator().manual_seed(1)
+    logits = torch.randn(32, len(weights), generator=g, requires_grad=True)
+    targets = torch.randint(0, len(weights), (32,), generator=g)
+    ce(logits, targets).backward()
+    grad_ce = logits.grad.clone()
+    logits.grad = None
+    focal2(logits, targets).backward()
+    assert not torch.allclose(grad_ce, logits.grad, atol=1e-6)
+
+    easy = torch.tensor([[8.0, 0.0, 0.0, 0.0, 0.0, 0.0]])
+    hard = torch.tensor([[1.0, 0.9, 0.0, 0.0, 0.0, 0.0]])
+    t = torch.tensor([0])
+    easy_ratio = focal2(easy, t).item() / ce(easy, t).item()
+    hard_ratio = focal2(hard, t).item() / ce(hard, t).item()
+    assert easy_ratio < hard_ratio
+    assert easy_ratio < 0.01
+
+
+def test_focal_loss_rejects_negative_gamma():
+    weights = class_weights_from_train_split(SPLITS_DIR)
+    with pytest.raises(ValueError, match="gamma"):
+        build_focal_loss(weights, gamma=-1.0)

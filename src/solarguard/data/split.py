@@ -1,7 +1,8 @@
 """Leakage-safe train/val/test split.
 
-No panel/session/source-ID metadata ships with SolarFCD (confirmed in Phase 0 —
-the archive contains only images, no metadata CSV). In the absence of true
+No panel/session/source-ID metadata ships with the PV Panel Defect Dataset
+(confirmed in PLANNING.md, PHASE 2 section C: filenames are a per-class counter,
+and only 6.6% of images carry any EXIF at all). In the absence of true
 provenance grouping, the strongest defensible alternative is to group images by
 *visual near-duplicate cluster* (see duplicates.py) so that near-identical copies
 of the same underlying photo can never be split across train/val/test. This is

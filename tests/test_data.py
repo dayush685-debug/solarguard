@@ -19,6 +19,14 @@ MANIFEST_PATH = ROOT / "data" / "splits" / "manifest.csv"
 AUDIT_PATH = ROOT / "data" / "processed" / "pvpanel_audit_with_clusters.csv"
 STATS_PATH = ROOT / "data" / "final" / "dataset_statistics.json"
 
+# The raw images are not committed (licence and size — see DATASET.md), so the tests that
+# actually read them can only run once the dataset has been downloaded locally. They skip
+# rather than fail when it is absent; every artifact-only test above still runs.
+requires_dataset = pytest.mark.skipif(
+    not DATA_RAW.exists(),
+    reason="Optional PV Panel Defect Dataset not present; dataset-dependent test skipped.",
+)
+
 VALID_CLASSES = {"Bird-drop", "Clean", "Dusty", "Electrical-damage", "Physical-Damage", "Snow-Covered"}
 VALID_SPLITS = {"Train", "Valid", "Test"}
 
@@ -53,11 +61,13 @@ def test_split_labels_are_valid(manifest):
     assert not invalid, f"unexpected split labels in manifest: {invalid}"
 
 
+@requires_dataset
 def test_files_exist(manifest):
     missing = [p for p in manifest["path"] if not (DATA_RAW / p).exists()]
     assert not missing, f"{len(missing)} manifest paths do not exist on disk, e.g. {missing[:5]}"
 
 
+@requires_dataset
 def test_images_are_readable(manifest):
     from PIL import Image
     unreadable = []
@@ -120,6 +130,7 @@ def test_no_label_conflict_clusters_in_manifest(manifest, audit):
         )
 
 
+@requires_dataset
 def test_split_is_reproducible_from_seed():
     """Re-running the split logic with the same seed must produce the identical
     test set — this is what makes the test set immune to accidental drift from

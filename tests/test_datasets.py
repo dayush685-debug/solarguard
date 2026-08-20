@@ -17,6 +17,13 @@ SPLITS_DIR = ROOT / "data" / "splits"
 IMAGES_ROOT = ROOT / "data" / "candidates" / "PV_Panel_Defect_Dataset"
 PREPROCESSING_CONFIG = load_config(ROOT / "configs" / "preprocessing.yaml")
 
+# Only the tests that decode real image bytes need the dataset; the manifest- and
+# sampler-level tests below run from committed metadata alone.
+requires_dataset = pytest.mark.skipif(
+    not IMAGES_ROOT.exists(),
+    reason="Optional PV Panel Defect Dataset not present; dataset-dependent test skipped.",
+)
+
 
 def test_dataset_length_matches_manifest():
     train_df = pd.read_csv(SPLITS_DIR / "train.csv")
@@ -25,6 +32,7 @@ def test_dataset_length_matches_manifest():
     assert len(dataset) == 540
 
 
+@requires_dataset
 def test_dataset_getitem_returns_correct_shape_and_valid_label():
     train_df = pd.read_csv(SPLITS_DIR / "train.csv")
     class_to_idx = json.loads((SPLITS_DIR / "class_mapping.json").read_text())
@@ -43,6 +51,7 @@ def test_dataset_raises_clear_error_on_missing_file(tmp_path):
         dataset[0]
 
 
+@requires_dataset
 def test_build_train_val_dataloaders_produces_correct_batch_shapes():
     train_loader, val_loader = build_train_val_dataloaders(
         SPLITS_DIR, IMAGES_ROOT, ROOT / "configs" / "preprocessing.yaml",

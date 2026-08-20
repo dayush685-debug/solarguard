@@ -28,10 +28,20 @@ checkpoints/
 *.pt
 *.pth
 *.h5
+# Exception: the deployment artifact is small (406 KB, optimizer state stripped) and
+# must ship so a fresh clone can run the Streamlit app without a training checkpoint.
+!models/solarguard_baseline_v1.pt
+
+# Local tooling / assistant working files — not part of the project
+.claude/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Private engineering notes. Kept locally, deliberately not published: the raw decision
+# log contains blunt working assessments of third-party datasets and papers.
+PLANNING.md
 
 # Secrets
 .env

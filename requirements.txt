@@ -1,0 +1,21 @@
+# Runtime dependencies for the hosted Streamlit app ONLY.
+#
+# Streamlit Community Cloud installs from requirements.txt at the repository root;
+# it does not read pyproject.toml's optional-dependency groups. This file therefore
+# duplicates the `app` extra deliberately rather than by oversight. For local work,
+# `pip install -e ".[app]"` remains the supported path.
+#
+# Scope: only what app/streamlit_app.py actually imports at serving time
+# (streamlit -> inference/predictor.py -> baseline_cnn.py, transforms.py).
+# pandas, scikit-learn and matplotlib are training/analysis dependencies and are
+# deliberately absent — the served checkpoint needs none of them.
+#
+# The CPU wheel index keeps the build small: the deployment checkpoint runs on CPU,
+# and the default PyPI build pulls CUDA libraries this app will never use.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+streamlit>=1.30
+torch>=2.0
+torchvision>=0.15
+Pillow
+PyYAML

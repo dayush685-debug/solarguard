@@ -1,4 +1,4 @@
-"""Walks the raw SolarFCD dataset and records per-image facts: hashes, dimensions,
+"""Walks a raw image dataset and records per-image facts: hashes, dimensions,
 format, corruption status, and a modality heuristic. Produces one row per file —
 no aggregation, no judgment calls — so every later analysis step works off the
 same ground truth table.

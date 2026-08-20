@@ -1,0 +1,18 @@
+seed: 456
+splits_dir: C:\Users\ayush dubey\OneDrive\Desktop\Solar_Guard\data\splits
+preprocessing_config_path: C:\Users\ayush dubey\OneDrive\Desktop\Solar_Guard\configs\preprocessing.yaml
+num_classes: 6
+in_channels: 3
+learning_rate: 0.001
+weight_decay: 0.0001
+lr_scheduler_factor: 0.5
+lr_scheduler_patience: 7
+batch_size: 32
+max_epochs: 100
+early_stopping_patience: 15
+num_workers: 0
+device: cuda
+primary_metric: macro_f1
+selection_tiebreaker: val_loss
+min_delta: 0.0001
+experiment_dir: C:\Users\ayush dubey\OneDrive\Desktop\Solar_Guard\experiments\baseline_3seed\seed_456

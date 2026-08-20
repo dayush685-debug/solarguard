@@ -28,7 +28,8 @@ class TrainingConfig:
     # reproducibility
     seed: int = 42
 
-    # data references (not copies — File 4 reads these paths, config doesn't own the data)
+    # data references (not copies — the training loop reads these paths; config doesn't
+    # own the data)
     splits_dir: Path = field(default_factory=lambda: _REPO_ROOT / "data" / "splits")
     preprocessing_config_path: Path = field(
         default_factory=lambda: _REPO_ROOT / "configs" / "preprocessing.yaml"
@@ -58,7 +59,7 @@ class TrainingConfig:
     primary_metric: str = "macro_f1"
     selection_tiebreaker: str = "val_loss"
     # Minimum genuine improvement in primary_metric required to count as "improved"
-    # (added after the Phase 3 file-4 review: a strict `>` comparison alone treats
+    # (a strict `>` comparison alone treats
     # e.g. 0.5012000001 > 0.5012 as a real improvement, which is within GPU
     # floating-point noise range, not a meaningful result). Default 1e-4, chosen
     # relative to the actual validation set size (117 images): macro F1 only changes

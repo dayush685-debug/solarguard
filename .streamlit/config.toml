@@ -1,0 +1,11 @@
+# Base theme. The app injects its own CSS on top of this, but setting the theme here
+# stops Streamlit's default light chrome from flashing before that CSS applies.
+[theme]
+base = "dark"
+primaryColor = "#F5B62C"
+backgroundColor = "#0F141B"
+secondaryBackgroundColor = "#161D26"
+textColor = "#E8EDF3"
+
+[server]
+maxUploadSize = 20

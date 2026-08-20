@@ -1,0 +1,7 @@
+,Bird-drop,Clean,Dusty,Electrical-damage,Physical-Damage,Snow-Covered
+Bird-drop,13,2,2,1,0,1
+Clean,2,24,1,0,0,0
+Dusty,2,1,21,1,0,1
+Electrical-damage,1,1,1,10,0,0
+Physical-Damage,4,3,0,0,3,0
+Snow-Covered,1,1,0,0,2,18

@@ -1,0 +1,44 @@
+{
+  "epoch": 27,
+  "accuracy": 0.7606837606837606,
+  "macro_f1": 0.7188798683315133,
+  "weighted_f1": 0.7555291796567969,
+  "per_class": {
+    "Bird-drop": {
+      "precision": 0.5652173913043478,
+      "recall": 0.6842105263157895,
+      "f1": 0.6190476190476191,
+      "support": 19
+    },
+    "Clean": {
+      "precision": 0.75,
+      "recall": 0.8888888888888888,
+      "f1": 0.8135593220338984,
+      "support": 27
+    },
+    "Dusty": {
+      "precision": 0.84,
+      "recall": 0.8076923076923077,
+      "f1": 0.8235294117647058,
+      "support": 26
+    },
+    "Electrical-damage": {
+      "precision": 0.8333333333333334,
+      "recall": 0.7692307692307693,
+      "f1": 0.8,
+      "support": 13
+    },
+    "Physical-Damage": {
+      "precision": 0.6,
+      "recall": 0.3,
+      "f1": 0.4,
+      "support": 10
+    },
+    "Snow-Covered": {
+      "precision": 0.9,
+      "recall": 0.8181818181818182,
+      "f1": 0.8571428571428571,
+      "support": 22
+    }
+  }
+}

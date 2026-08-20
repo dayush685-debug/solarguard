@@ -1,5 +1,5 @@
-"""Focused tests for src/solarguard/training/train.py's _is_improvement — the exact
-logic discussed in the Phase 3 file-4 Q&A review (min_delta threshold + tie-breaker)."""
+"""Focused tests for src/solarguard/training/train.py's _is_improvement — the
+min_delta threshold and the val_loss tie-breaker."""
 
 import pytest
 import torch

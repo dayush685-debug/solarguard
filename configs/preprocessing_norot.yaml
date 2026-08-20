@@ -1,0 +1,60 @@
+# SolarGuard preprocessing configuration -- EXPERIMENT 3 VARIANT (rotation disabled).
+# Identical to configs/preprocessing.yaml except train_augmentation.rotation.enabled.
+# Every value here is justified in PLANNING.md Phase 2 — nothing is a framework default
+# copy-pasted without reasoning specific to this dataset and task.
+
+image_size: 224          # canonical MobileNetV2 / EfficientNet-B0 input size
+interpolation: bilinear  # most images here are being downsampled (median 720x632, up to 6240px wide)
+
+normalization:
+  # ImageNet statistics — required to match the pretrained backbones' expected input
+  # distribution. Using anything else fights the pretrained weights.
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+
+rgb_conversion:
+  # 16 RGBA + 2 MPO files found in the verified-unique set (see dataset_statistics.json)
+  required: true
+  method: convert_to_rgb  # PIL .convert("RGB") — drops alpha, reads first MPO frame
+
+train_augmentation:
+  # Kept physically motivated, not a generic augmentation grab-bag. Everything here
+  # simulates a real variation a genuine user photo could have; nothing here can hide
+  # or distort the defect region itself.
+  horizontal_flip:
+    enabled: true
+    probability: 0.5
+    reason: "a photographed panel can plausibly be mirrored"
+  vertical_flip:
+    enabled: false
+    reason: "would put sky below ground — never realistic for this subject"
+  rotation:
+    enabled: false
+    max_degrees: 15
+    reason: "EXPERIMENT 3: disabled. torchvision RandomRotation defaults to fill=0, so a
+      15-degree rotation blacks out a mean 5.53% (max 10.08%) of pixels in ~91% of training
+      images. Validation images have 0% black pixels, so this artifact exists only in
+      training -- a train/eval distribution gap created by augmentation itself, which also
+      discards ~5% of real panel content per image. Baseline runs show train loss ABOVE val
+      loss in every seed (no overfitting), so the training signal is already harder than
+      necessary. max_degrees retained for provenance; ignored while enabled=false."
+  color_jitter:
+    enabled: true
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.1
+    hue: 0.0
+    reason: "dataset spans multiple camera makes/models (confirmed via EXIF) with different color response"
+  random_resized_crop:
+    enabled: true
+    scale_min: 0.9
+    scale_max: 1.0
+    reason: "simulates framing/distance differences in a real user upload, without cropping out the defect"
+  random_erasing:
+    enabled: false
+    reason: "risks erasing the exact defect region (a crack, a bird-drop mark) the model must learn — works against the task, not for it"
+
+val_test_preprocessing:
+  # Identical for validation and test. No augmentation, ever.
+  steps: [resize, rgb_conversion, normalize]
+  augmentation: none

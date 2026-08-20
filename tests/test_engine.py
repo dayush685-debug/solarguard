@@ -66,10 +66,10 @@ def test_one_validation_step_returns_full_metric_suite():
 
 
 def test_evaluate_respects_custom_loss_prefix():
-    """evaluate()'s default is "val" (what Phase 3 actually uses everywhere) — this
+    """evaluate()'s default is "val" (what training actually uses everywhere) — this
     confirms the loss_prefix parameter's behavior without changing that default or
-    evaluate()'s other semantics, closing the gap identified in the file-4 review:
-    previously nothing exercised any value other than the default."""
+    evaluate()'s other semantics. Previously nothing exercised any value other than
+    the default."""
     model = _tiny_model()
     result = evaluate(
         model, _fake_loader(), nn.CrossEntropyLoss(), torch.device("cpu"), CLASS_NAMES,

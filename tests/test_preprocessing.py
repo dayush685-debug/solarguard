@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+import pytest
 import torch
 from PIL import Image
 
@@ -13,19 +14,29 @@ CONFIG = load_config(ROOT / "configs" / "preprocessing.yaml")
 # A real RGBA sample confirmed present in dataset_statistics.json's mode_distribution
 SAMPLE_IMAGE = ROOT / "data" / "candidates" / "PV_Panel_Defect_Dataset" / "train" / "Bird-drop" / "Bird (111).jpg"
 
+# That sample is part of the uncommitted dataset (see DATASET.md). The synthetic-image
+# tests at the bottom of this file exercise the same transforms without it.
+requires_dataset = pytest.mark.skipif(
+    not SAMPLE_IMAGE.exists(),
+    reason="Optional PV Panel Defect Dataset not present; dataset-dependent test skipped.",
+)
 
+
+@requires_dataset
 def test_eval_transform_output_shape():
     tf = build_eval_transform(CONFIG)
     out = tf(Image.open(SAMPLE_IMAGE))
     assert out.shape == (3, CONFIG["image_size"], CONFIG["image_size"])
 
 
+@requires_dataset
 def test_train_transform_output_shape():
     tf = build_train_transform(CONFIG)
     out = tf(Image.open(SAMPLE_IMAGE))
     assert out.shape == (3, CONFIG["image_size"], CONFIG["image_size"])
 
 
+@requires_dataset
 def test_eval_transform_is_deterministic():
     """No augmentation in the eval path — the same image must always produce the
     identical tensor. This is what "no augmentation on val/test" means concretely."""
@@ -35,6 +46,7 @@ def test_eval_transform_is_deterministic():
     assert torch.equal(out1, out2)
 
 
+@requires_dataset
 def test_train_transform_is_stochastic():
     """Sanity check that augmentation is actually wired up, not silently a no-op."""
     tf = build_train_transform(CONFIG)

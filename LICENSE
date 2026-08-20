@@ -1,0 +1,71 @@
+MIT License
+
+Copyright (c) 2026 Ayush Dubey
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+SCOPE OF THE MIT LICENSE ABOVE, AND TERMS FOR MATERIAL IT DOES NOT COVER
+================================================================================
+
+The MIT licence above applies to the original work in this repository: the
+source code under src/, scripts/, app/, and tests/, the configuration files
+under configs/, and the written documentation (README.md, DATASET.md,
+PLANNING.md, and docs/).
+
+It does NOT apply to the two items below.
+
+1. THE DATASET — not distributed here
+-------------------------------------
+The PV Panel Defect Dataset is licensed by its uploader under
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+(CC BY-NC-SA 4.0), which permits NON-COMMERCIAL use only.
+
+    https://www.kaggle.com/datasets/alicjalena/pv-panel-defect-dataset
+    https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+No dataset image is included in this repository; data/ is gitignored apart
+from image-free metadata (manifests, hashes, split definitions, and audit
+tables). Anyone reproducing this work must obtain the dataset themselves under
+its own terms — see DATASET.md.
+
+As stated in DATASET.md, this is a community-uploaded aggregation of images
+from multiple public web sources. The uploader's licence reflects their right
+to license the compilation; it does not by itself establish that every
+underlying photograph's original rights-holder consented to that
+redistribution. No image is claimed as original work by this project.
+
+2. THE TRAINED MODEL WEIGHTS — models/solarguard_baseline_v1.pt
+---------------------------------------------------------------
+These weights were produced by training on the dataset described above, and
+are therefore treated as a derivative of CC BY-NC-SA 4.0 material. They are
+made available under the SAME terms as that dataset — CC BY-NC-SA 4.0 —
+and NOT under the MIT licence:
+
+  - NonCommercial: no commercial use.
+  - ShareAlike: distribute any adaptation under these same terms.
+  - Attribution: credit this project and the original dataset.
+
+This is the conservative reading, chosen deliberately rather than asserting
+that the weights are unencumbered. It matches the statement in
+docs/MODEL_CARD.md that downstream use of the trained weights inherits the
+non-commercial restriction.
+
+The code that produced the weights remains MIT-licensed; retraining it on data
+you have your own rights to yields weights this restriction does not touch.

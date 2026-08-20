@@ -24,8 +24,8 @@ from solarguard.training.engine import evaluate, resolve_device, train_one_epoch
 def _is_improvement(
     primary_value: float, best_value: float, val_loss: float, best_val_loss: float, min_delta: float
 ) -> bool:
-    """Phase 3 §8 selection criterion, with a min_delta floor added after the file-4
-    review: a strict `>` alone treats e.g. 0.5012000001 > 0.5012 as a real
+    """Model-selection criterion (PLANNING.md, PHASE 3 DESIGN REVIEW section 8), with a
+    min_delta floor: a strict `>` alone treats e.g. 0.5012000001 > 0.5012 as a real
     improvement, which is within GPU floating-point noise range for macro F1.
 
     Only the "genuine improvement" branch is gated by min_delta — the exact-tie

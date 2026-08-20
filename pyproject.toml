@@ -11,9 +11,30 @@ dependencies = [
     "pyyaml",
     "Pillow",
 ]
-# torch/torchvision deliberately NOT listed: Colab provides a CUDA-matched build
-# already; pinning our local versions here risks conflicting with Colab's own
-# CUDA runtime for no benefit. Local dev machines already have them installed.
+# torch/torchvision deliberately NOT listed as core dependencies: Colab provides a
+# CUDA-matched build already, and pinning our local versions here risks conflicting
+# with Colab's own CUDA runtime for no benefit. They are required to run anything in
+# this repository -- install them separately for local training (see README), or via
+# the `app` extra below, which must be self-contained for serving.
+
+[project.optional-dependencies]
+# Serving-only. Kept out of the core dependency set so training/experiment installs
+# stay lean: `pip install -e .` for research, `pip install -e ".[app]"` to run the UI.
+app = [
+    "streamlit>=1.30",
+    # The serving path imports torch/torchvision (inference/predictor.py ->
+    # models/baseline_cnn.py, preprocessing/transforms.py). Without these,
+    # `pip install -e ".[app]"` succeeds but `streamlit run` fails on import.
+    # CPU wheels are sufficient -- the deployment checkpoint runs on CPU.
+    "torch>=2.0",
+    "torchvision>=0.15",
+]
+
+# Test runner. The README's reproduction steps invoke pytest, so it has to be
+# installable from this file rather than assumed present.
+dev = [
+    "pytest>=7.0",
+]
 
 [build-system]
 requires = ["setuptools>=61.0"]
